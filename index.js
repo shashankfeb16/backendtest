@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors")
 const connection = require("./config/db");
-const userController = require("./routes/user.routes")
-const blogController = require("./routes/blogs.routes")
+const teacherController = require("./routes/teacher.routes")
+const studentController = require("./routes/students.routes")
 const authentication = require("./middlewares/authentication")
 
 const app = express();
@@ -13,14 +13,14 @@ app.use(cors())
 
 
 app.get("/", (req, res) => {
-    res.send("Blog page")
+    res.send("Home page")
 })
 
-app.use("/user", userController);
+app.use("/teacher", teacherController);
 
 app.use(authentication)
 
-app.use(blogController)
+app.use(studentController)
 
 app.listen(process.env.PORT, async () => {
     try{

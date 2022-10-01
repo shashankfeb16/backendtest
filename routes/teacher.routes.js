@@ -2,17 +2,17 @@ const express = require("express")
 const bcrypt  = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
-const UserModel = require("../models/User.model")
+const TeacherModel = require("../models/Teacher.model")
 
-const userController = express.Router();
+const teacherController = express.Router();
 
-userController.post("/signup", (req, res) => {
+teacherController.post("/signup", (req, res) => {
     const {email, password} = req.body;
     bcrypt.hash(password, 6, async function(err, hash) {
         if(err){
             res.send("please try again")
         }
-        const user = new UserModel({
+        const user = new TeacherModel({
             email,
             password : hash
         })
@@ -21,18 +21,17 @@ userController.post("/signup", (req, res) => {
     });
 })
 
-userController.post("/login", async (req, res) => {
+teacherController.post("/login", async (req, res) => {
     const {email, password} = req.body;
-    const user = await UserModel.findOne({email})
+    const user = await TeacherModel.findOne({email})
     console.log(user)
     if(!user){
         return res.send("Invalid Credentials")
     }
     const hash = user.password;
-    const userId = user._id;
     bcrypt.compare(password, hash, function(err, result) {
         if(result){
-            var token = jwt.sign({email,userId}, 'secret');
+            var token = jwt.sign({email}, 'secret');
             return res.send({"message":"login success", "token" : token})
         }
         else{
@@ -42,4 +41,4 @@ userController.post("/login", async (req, res) => {
 })
 
 
-module.exports = userController
+module.exports = teacherController
