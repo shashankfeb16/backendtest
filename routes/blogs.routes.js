@@ -20,8 +20,22 @@ blogController.post("/blogs/create",async(req,res)=>{
 });
 
 blogController.get("/blogs",async(req,res)=>{
-    const {userId} = req.body;
-    const blog = await BlogModel.find({userId});
+    // const {userId} = req.body;
+    const {title,author,category} = req.query
+    // console.log(title,author)
+    const blog = await BlogModel.find({title,author,category});
+    // const blog = await BlogModel.find({$or:[{$and:[{title,author}]},{$and:[{title,category}]},{$and:[{author,category}]},{$and:[{title,author,category}]}]});
+    // const blog = await BlogModel.find({$or:[{title,author},{title,category},{author,category},{title,author,category}]})
+    res.send(blog);
+   
+});
+
+blogController.get("/blogs/title",async(req,res)=>{
+    // const {userId} = req.body;
+    let {title,sort,page} = req.query;
+    // sort = sort.toLowerCase()
+    console.log(sort)
+    const blog = await BlogModel.find({title}).sort({author:sort}).skip(page).limit(8)
     res.send(blog);
    
 });

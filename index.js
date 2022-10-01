@@ -13,7 +13,7 @@ app.use(cors())
 
 
 app.get("/", (req, res) => {
-    res.send("home page")
+    res.send("Blog page")
 })
 
 app.use("/user", userController);
