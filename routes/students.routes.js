@@ -31,6 +31,13 @@ studentController.get("/students",async(req,res)=>{
    
 });
 
+studentController.get("/students/sort",async(req,res)=>{
+    let {sort} = req.query;
+    const student = await StudentModel.find().sort({age:sort})
+    res.send(student)
+   
+});
+
 
 
 studentController.patch("/students/:studentId",async (req,res)=>{
