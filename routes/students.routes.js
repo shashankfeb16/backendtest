@@ -18,12 +18,12 @@ studentController.post("/student/create",async(req,res)=>{
 
 });
 
-studentController.get("/getallstudents",async(req,res)=>{
-    const student = await StudentModel.find();
-    if(student){
-        res.send(student)
-    }
-});
+// studentController.get("/getallstudents",async(req,res)=>{
+//     const student = await StudentModel.find();
+//     if(student){
+//         res.send(student)
+//     }
+// });
 
 studentController.get("/students/filter",async(req,res)=>{
     const {gender} = req.query;
@@ -33,20 +33,29 @@ studentController.get("/students/filter",async(req,res)=>{
 
 studentController.get("/students",async(req,res)=>{
     let {gender,sort,page} = req.query;
-    if(gender==null && sort==null && page==null){
-        const student = await StudentModel.find()
-        res.send(student)
+    console.log(gender,sort,page);
+    if(gender===undefined && sort===undefined){
+        const student = await StudentModel.find();
+        if(student){
+           return res.send(student)
+        }
     }
-    if(gender==null){
+    else if(gender===undefined){
         const student = await StudentModel.find().sort({age:sort}).skip(page).limit(3);
-        res.send(student)
+        if(student){
+            return res.send(student);
+        }
     }
-    if(sort=null){
+    else if(sort===undefined){
         const student = await StudentModel.find({gender}).skip(page).limit(3);
-        res.send(student)
+        if(student){
+           return res.send(student);
+        }
     }
     const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
-    res.send(student)
+    if(student){
+       return res.send(student);
+    }
    
 });
 
