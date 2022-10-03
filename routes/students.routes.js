@@ -31,12 +31,20 @@ studentController.get("/students/filter",async(req,res)=>{
     res.send(student);
 })
 
-// studentController.get("/students",async(req,res)=>{
-//     let {gender,sort,page} = req.query;
-//     const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
-//     res.send(student)
+studentController.get("/students",async(req,res)=>{
+    let {gender,sort,page} = req.query;
+    if(gender==null){
+        const student = await StudentModel.find().sort({age:sort}).skip(page).limit(3);
+        res.send(student)
+    }
+    if(sort=null){
+        const student = await StudentModel.find({gender}).skip(page).limit(3);
+        res.send(student)
+    }
+    const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
+    res.send(student)
    
-// });
+});
 
 studentController.get("/students/search",async(req,res)=>{
     const {name} = req.query;
