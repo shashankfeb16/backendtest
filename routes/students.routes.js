@@ -18,12 +18,12 @@ studentController.post("/student/create",async(req,res)=>{
 
 });
 
-// studentController.get("/getallstudents",async(req,res)=>{
-//     const student = await StudentModel.find();
-//     if(student){
-//         res.send(student)
-//     }
-// });
+studentController.get("/getallstudents",async(req,res)=>{
+    const student = await StudentModel.find();
+    if(student){
+        res.send(student)
+    }
+});
 
 studentController.get("/students/filter",async(req,res)=>{
     const {gender} = req.query;
