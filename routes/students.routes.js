@@ -40,13 +40,13 @@ studentController.get("/students",async(req,res)=>{
            return res.send(student)
         }
     }
-    else if(gender===undefined){
+    if(gender===undefined){
         const student = await StudentModel.find().sort({age:sort}).skip(page).limit(3);
         if(student){
             return res.send(student);
         }
     }
-    else if(sort===undefined){
+    if(sort===undefined){
         const student = await StudentModel.find({gender}).skip(page).limit(3);
         if(student){
            return res.send(student);
