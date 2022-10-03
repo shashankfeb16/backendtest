@@ -33,6 +33,10 @@ studentController.get("/students/filter",async(req,res)=>{
 
 studentController.get("/students",async(req,res)=>{
     let {gender,sort,page} = req.query;
+    if(gender==null && sort==null && page==null){
+        const student = await StudentModel.find()
+        res.send(student)
+    }
     if(gender==null){
         const student = await StudentModel.find().sort({age:sort}).skip(page).limit(3);
         res.send(student)
