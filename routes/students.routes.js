@@ -23,13 +23,28 @@ studentController.get("/getallstudents",async(req,res)=>{
     if(student){
         res.send(student)
     }
-})
-studentController.get("/students",async(req,res)=>{
-    let {gender,sort,page} = req.query;
-    const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
-    res.send(student)
-   
 });
+
+studentController.get("/students/filter",async(req,res)=>{
+    const {gender} = req.query;
+    const student = await StudentModel.find({gender});
+    res.send(student);
+})
+
+// studentController.get("/students",async(req,res)=>{
+//     let {gender,sort,page} = req.query;
+//     const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
+//     res.send(student)
+   
+// });
+
+studentController.get("/students/search",async(req,res)=>{
+    const {name} = req.query;
+    const student = await StudentModel.find({name});
+    res.send(student)
+})
+
+
 
 studentController.get("/students/sort",async(req,res)=>{
     let {sort} = req.query;
