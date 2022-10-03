@@ -52,6 +52,12 @@ studentController.get("/students",async(req,res)=>{
            return res.send(student);
         }
     }
+    if(page===undefined){
+        const student = await StudentModel.find();
+        if(student){
+           return res.send(student);
+        }
+    }
     const student = await StudentModel.find({gender}).sort({age:sort}).skip(page).limit(3);
     if(student){
        return res.send(student);
