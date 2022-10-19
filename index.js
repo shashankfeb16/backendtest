@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors")
 const connection = require("./config/db");
-const teacherController = require("./routes/teacher.routes")
-const studentController = require("./routes/students.routes")
+const userController = require("./routes/user.routes")
+const bmiController = require("./routes/bmi.routes")
 const authentication = require("./middlewares/authentication")
 
 const app = express();
@@ -16,11 +16,11 @@ app.get("/", (req, res) => {
     res.send("Home page")
 })
 
-app.use("/teacher", teacherController);
+app.use("/user", userController);
 
 app.use(authentication)
 
-app.use(studentController)
+app.use(bmiController)
 
 app.listen(process.env.PORT, async () => {
     try{
@@ -31,5 +31,5 @@ app.listen(process.env.PORT, async () => {
         console.log("error connecting to db")
         console.log(err)
     }
-    console.log("listening on 8000")
+    console.log("listening on 8080")
 })

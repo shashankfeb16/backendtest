@@ -2,17 +2,18 @@ const express = require("express")
 const bcrypt  = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
-const TeacherModel = require("../models/Teacher.model")
+const UserModel = require("../models/User.model")
 
-const teacherController = express.Router();
+const userController = express.Router();
 
-teacherController.post("/signup", (req, res) => {
-    const {email, password} = req.body;
+userController.post("/signup", (req, res) => {
+    const {name,email, password} = req.body;
     bcrypt.hash(password, 6, async function(err, hash) {
         if(err){
             res.send("please try again")
         }
-        const user = new TeacherModel({
+        const user = new UserModel({
+            name,
             email,
             password : hash
         })
@@ -21,9 +22,9 @@ teacherController.post("/signup", (req, res) => {
     });
 })
 
-teacherController.post("/login", async (req, res) => {
+userController.post("/login", async (req, res) => {
     const {email, password} = req.body;
-    const user = await TeacherModel.findOne({email})
+    const user = await UserModel.findOne({email})
     console.log(user)
     if(!user){
         return res.send("Invalid Credentials")
@@ -41,4 +42,4 @@ teacherController.post("/login", async (req, res) => {
 })
 
 
-module.exports = teacherController
+module.exports = userController
